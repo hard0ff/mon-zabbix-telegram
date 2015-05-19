@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# change parametrs:
+# HTTP_LOGIN:HTTP_PASS
+# MY_ZABBIX_USER_HERE MY_ZABBIX_PASSWORD_HERE
 
 # Get AUTH Token
 api=`curl -s -q -u HTTP_LOGIN:HTTP_PASS -i -X GET -H 'Content-Type:application/json' -d'{
