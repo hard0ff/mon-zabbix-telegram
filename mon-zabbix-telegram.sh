@@ -1,6 +1,9 @@
 #!/bin/bash -e
 
-# ToDO: v1.0 with out checks
+# ToDO: v1.1
+#
+#  - Переделать всё на timestamp
+#
 # Готовность
 #  + получить данные и путь к данным (Zabbix API: 2.2.9)
 #     - проверка работоспособности zabbix API
@@ -75,6 +78,7 @@ TGDEST='chat#23467410'
 # анализируем уровень триггера
 alarming_subsystem() {
   if [ $TRIGGERPRIORITY = "2" ]; then
+    # DO nothing
     true
   fi
   # Ленивая оповещалка (алармим каждое 25 срабатывание)
@@ -191,7 +195,9 @@ mainprogram() {
     # берём приоритет события и счётчик события
     if [ $EVENTEXIST = "0" ]; then
        # событие новое
-       send_alarm_to_telegram
+        TRIGGERPRIORITY=4
+        TRIGGERCOUNT=4
+#       send_alarm_to_telegram
     else
        # событие не новое
        # берём из таблицы приоритет триггера(TRIGGERPRIORITY) и счётчик события(TRIGGERPRIORITY)
