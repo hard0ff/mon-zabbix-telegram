@@ -3,6 +3,9 @@
 # ToDO: v1.1
 #
 #  - Переделать всё на timestamp
+#  + очистка URL
+#    + временно поставил обнуление URL
+#    - разобраться почему url не обновляется
 #
 # Готовность
 #  + получить данные и путь к данным (Zabbix API: 2.2.9)
@@ -86,7 +89,7 @@ alarming_subsystem() {
      # Проверить счётчик, если 1, то
      if [ $TRIGGERCOUNT = "1" ]; then
         # выставить счётчик count в 25
-        echo 'UPDATE priority SET count = "25" WHERE triggerid = '$triggerid'' | MYSQL_PWD=$DBpass mysql -s -h$DBhost -u$DBuser $DBname
+        echo 'UPDATE priority SET count = "50" WHERE triggerid = '$triggerid'' | MYSQL_PWD=$DBpass mysql -s -h$DBhost -u$DBuser $DBname
         # Алармить
         send_alarm_to_telegram
      else
@@ -175,6 +178,7 @@ mainprogram() {
   for i in $TGList; do
     # распарсили данные
     sorted=`echo "$datasrc" | sed -n "/^triggerid: $i/,/^eventid:/p" | sed 's/: /=/g' | sed 's/ /_/g'`
+    url=""
     for str in `echo "$sorted" | sed 's/^ *//' | egrep -v '^$|^#'`; do
         eval $(echo "$str"|sed 's/ *=/=/;s/= */=/');
     done
