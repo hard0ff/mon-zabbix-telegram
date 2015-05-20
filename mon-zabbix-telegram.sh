@@ -77,10 +77,26 @@ alarming_subsystem() {
   if [ $TRIGGERPRIORITY = "2" ]; then
     true
   fi
+  # Ленивая оповещалка (алармим каждое 25 срабатывание)
+  if [ $TRIGGERPRIORITY = "3" ]; then
+     # Проверить счётчик, если 1, то
+     if [ $TRIGGERCOUNT = "1" ]; then
+        # выставить счётчик count в 25
+        echo 'UPDATE priority SET count = "25" WHERE triggerid = '$triggerid'' | MYSQL_PWD=$DBpass mysql -s -h$DBhost -u$DBuser $DBname
+        # Алармить
+        send_alarm_to_telegram
+     else
+        # Уменьшить счётчик на 1
+        newtc=$(expr $TRIGGERCOUNT - 1)
+        #echo newtc=$newtc
+        echo 'UPDATE priority SET count = '$newtc' WHERE triggerid = '$triggerid'' | MYSQL_PWD=$DBpass mysql -s -h$DBhost -u$DBuser $DBname
+     fi
+  fi
+  # Стандартная оповещалка (алармим каждое 4 срабатывание)
   if [ $TRIGGERPRIORITY = "4" ]; then
      # Проверить счётчик, если 1, то
      if [ $TRIGGERCOUNT = "1" ]; then
-        # выставить счётчик count в 4
+        # выставить счётчик count в 5
         echo 'UPDATE priority SET count = "5" WHERE triggerid = '$triggerid'' | MYSQL_PWD=$DBpass mysql -s -h$DBhost -u$DBuser $DBname
         # Алармить
         send_alarm_to_telegram
