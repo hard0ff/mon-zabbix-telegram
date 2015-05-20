@@ -102,7 +102,7 @@ alarming_subsystem() {
 # отправляем аларм в телеграм
 send_alarm_to_telegram() {
   # перед отправкой многострочного сообщения в телеграм необходимо его записать в файл
-  echo -e "EVENT:$eventid:PRIO:$TRIGGERPRIORITY\nHOST: $host\nDESCR: $description\nURL: $url" > $TMPFILE
+  echo -e "EVENT:$eventid:TRIGGER:$triggerid:PRIO:$TRIGGERPRIORITY\nHOST: $host\nDESCR: $description\nURL: $url" > $TMPFILE
   $TGCLIPATH $TGCLIPARAM -e "send_text $TGDEST $TMPFILE" > /dev/null
 }
 
