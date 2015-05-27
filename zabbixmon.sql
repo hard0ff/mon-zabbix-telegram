@@ -1,8 +1,8 @@
--- MySQL dump 10.15  Distrib 10.0.16-MariaDB, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.24, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: zabbixmon
+-- Host: localhost    Database: zabbixmon
 -- ------------------------------------------------------
--- Server version	10.0.16-MariaDB-log
+-- Server version	5.6.24-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,10 +23,12 @@ DROP TABLE IF EXISTS `priority`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `priority` (
+  `new` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `triggerid` text NOT NULL,
   `eventid` text NOT NULL,
   `priority` text NOT NULL,
-  `count` text NOT NULL
+  `count` int(11) NOT NULL,
+  PRIMARY KEY (`new`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -47,12 +49,14 @@ DROP TABLE IF EXISTS `trigger_id`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `trigger_id` (
+  `newid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `triggerid` text,
   `eventid` text,
   `description` text,
   `url` text,
   `hostid` text,
-  `host` text
+  `host` text,
+  PRIMARY KEY (`newid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -74,4 +78,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-19 12:07:59
+-- Dump completed on 2015-05-27 13:46:53
